@@ -6,26 +6,58 @@
 import React, {
   AppRegistry,
   Component,
+  Navigator,
   StyleSheet,
   Text,
   View
 } from 'react-native';
 
+import { Router, Route, Schema, Animation } from 'react-native-router-flux';
+
+import DashboardView from './views/DashboardView';
+import GuestsView    from './views/GuestsView';
+import LocalMapView  from './views/LocalMapView';
+import ScheduleView  from './views/ScheduleView';
+
+
 class ConNexusReact extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      con_data: {}
+    }
+  }
+
+  componentWillMount() {
+    console.log("test");
+    fetch('http://con-nexus.bgun.me/api/con/jcon2015', {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    }).then(resp => resp.json())
+      .then(respText => {
+        console.log("resp", respText);
+        this.setState({
+          con_data: respText.name
+        });
+      })
+      .catch(err => {
+        console.warn(err);
+      });
+  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
+      <Router>
+        <Schema name="default" sceneConfig={ Navigator.SceneConfigs.FloatFromRight }/>
+
+        <Route name="dashboard" component={ DashboardView } initial={ true } />
+        <Route name="schedule"  component={ ScheduleView } />
+        <Route name="guests"    component={ GuestsView } />
+        <Route name="localMap"  component={ LocalMapView } />
+      </Router>
     );
   }
 }
@@ -36,17 +68,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  }
 });
 
 AppRegistry.registerComponent('ConNexusReact', () => ConNexusReact);
