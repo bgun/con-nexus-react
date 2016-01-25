@@ -11,12 +11,12 @@ import React, {
 import { Actions } from 'react-native-router-flux';
 
 
-export default class EventItem extends Component {
+export default class GuestItem extends Component {
 
   render() {
     return (
-      <TouchableOpacity style={ styles.item } onPress={ () => Actions.eventDetail(this.props.item) }>
-        <Text>{ this.props.item.title }</Text>
+      <TouchableOpacity style={ styles.item } onPress={ () => Actions.guestDetail(this.props.item) }>
+        <Text>{ this.props.item.name }</Text>
       </TouchableOpacity>
     );
   }

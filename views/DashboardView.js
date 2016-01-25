@@ -5,7 +5,7 @@ import React, {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableHighlight,
+  TouchableOpacity,
   View
 } from 'react-native';
 
@@ -44,14 +44,19 @@ export default class DashboardView extends Component {
     return (
       <View style={ styles.container }>
         <View>
-          <TouchableHighlight onPress={ () => Actions.schedule(this.state.con_data.events) }>
+          <TouchableOpacity onPress={ () => Actions.schedule(this.state.con_data.events) }>
             <Text>Schedule</Text>
-          </TouchableHighlight>
+          </TouchableOpacity>
         </View>
         <View>
-          <TouchableHighlight onPress={ () => Actions.localMap() }>
+          <TouchableOpacity onPress={ () => Actions.localMap() }>
             <Text>Local Map</Text>
-          </TouchableHighlight>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <TouchableOpacity onPress={ () => Actions.guests(this.state.con_data.guests) }>
+            <Text>Guests</Text>
+          </TouchableOpacity>
         </View>
       </View>
     );

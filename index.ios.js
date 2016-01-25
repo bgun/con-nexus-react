@@ -16,6 +16,7 @@ import { Router, Route, Schema, Animation } from 'react-native-router-flux';
 
 import DashboardView   from './views/DashboardView';
 import EventDetailView from './views/EventDetailView';
+import GuestDetailView from './views/GuestDetailView';
 import GuestsView      from './views/GuestsView';
 import LocalMapView    from './views/LocalMapView';
 import ScheduleView    from './views/ScheduleView';
@@ -33,6 +34,7 @@ class ConNexusReact extends Component {
         <Route name="guests"      component={ GuestsView      } title="Guests" />
         <Route name="localMap"    component={ LocalMapView    } title="Local Map" />
         <Route name="eventDetail" component={ EventDetailView } title="Event Detail" />
+        <Route name="guestDetail" component={ GuestDetailView } title="Guest Detail" />
       </Router>
     );
   }
