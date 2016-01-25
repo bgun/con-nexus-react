@@ -4,7 +4,8 @@ import React from 'react-native';
 
 let {
   Component,
-  ScrollView,
+  InteractionManager,
+  ListView,
   StyleSheet,
   Text,
   View
@@ -17,19 +18,21 @@ export default class ScheduleView extends Component {
 
   constructor(props) {
     super();
-    console.log("PROPS", props);
+    let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
-      eventItems: props.data
-    }
+      dataSource: ds.cloneWithRows(props.data),
+    };
   }
 
   render() {
     return (
-      <ScrollView style={ styles.scroll }>
-        { this.state.eventItems.map(ei => (
-          <EventItem key={ ei._id } item={ ei } />
-        ) ) }
-      </ScrollView>
+      <ListView
+        style={ styles.scroll }
+        dataSource={ this.state.dataSource }
+        renderRow={(rowData) => (
+          <EventItem key={ rowData._id } item={ rowData } />
+        )}
+      />
     );
   }
 
