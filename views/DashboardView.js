@@ -1,34 +1,58 @@
 'use strict';
 
-import React from 'react-native';
-
-let {
+import React, {
   Component,
   ScrollView,
   StyleSheet,
   Text,
   TouchableHighlight,
   View
-} = React;
+} from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
 
 
 export default class DashboardView extends Component {
 
-  constructor(props) {
+  constructor() {
     super();
     this.state = {
-
+      con_data: {}
     }
+  }
+
+  componentWillMount() {
+    console.log("test");
+    fetch('http://con-nexus.bgun.me/api/con/jcon2015', {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    }).then(resp => resp.json())
+      .then(data => {
+        console.log("resp", data);
+        this.setState({
+          con_data: data
+        });
+      })
+      .catch(err => {
+        console.warn(err);
+      });
   }
 
   render() {
     return (
       <View style={ styles.container }>
-        <TouchableHighlight onPress={ Actions.schedule }
-          ><Text>Link</Text>
-        </TouchableHighlight>
+        <View>
+          <TouchableHighlight onPress={ () => Actions.schedule(this.state.con_data.events) }>
+            <Text>Schedule</Text>
+          </TouchableHighlight>
+        </View>
+        <View>
+          <TouchableHighlight onPress={ () => Actions.localMap() }>
+            <Text>Local Map</Text>
+          </TouchableHighlight>
+        </View>
       </View>
     );
   }

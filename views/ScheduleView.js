@@ -10,40 +10,35 @@ let {
   View
 } = React;
 
+import EventItem from '../components/EventItem';
+
 
 export default class ScheduleView extends Component {
 
   constructor(props) {
     super();
+    console.log("PROPS", props);
     this.state = {
-
+      eventItems: props.data
     }
   }
 
   render() {
     return (
-      <View style={ styles.container }>
-        <ScrollView style={ styles.scroll }>
-          <View><Text>Test 1</Text></View>
-          <View><Text>Test 2</Text></View>
-          <View><Text>Test 3</Text></View>
-          <View><Text>Test 4</Text></View>
-        </ScrollView>
-      </View>
+      <ScrollView style={ styles.scroll }>
+        { this.state.eventItems.map(ei => (
+          <EventItem key={ ei._id } item={ ei } />
+        ) ) }
+      </ScrollView>
     );
   }
 
 }
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    backgroundColor: '#FF0000',
-    flex: 1,
-    justifyContent: 'center'
-  },
   scroll: {
     backgroundColor: '#FFFFFF',
-    marginTop: 62
+    flex: 1,
+    marginTop: 63
   }
 });
