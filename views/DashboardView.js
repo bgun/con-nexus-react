@@ -3,6 +3,8 @@
 import React, {
   AsyncStorage,
   Component,
+  Dimensions,
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -11,6 +13,9 @@ import React, {
 } from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
+
+let wh = Dimensions.get('window').height;
+let ww = Dimensions.get('window').width;
 
 
 export default class DashboardView extends Component {
@@ -62,23 +67,29 @@ export default class DashboardView extends Component {
   }
 
   render() {
+    console.log(ww, wh);
     return (
       <View style={ styles.container }>
-        <View>
-          <TouchableOpacity onPress={ () => Actions.schedule(this.state.con_data.events) }>
-            <Text>Schedule</Text>
-          </TouchableOpacity>
-        </View>
-        <View>
-          <TouchableOpacity onPress={ () => Actions.localMap() }>
-            <Text>Local Map</Text>
-          </TouchableOpacity>
-        </View>
-        <View>
-          <TouchableOpacity onPress={ () => Actions.guests(this.state.con_data.guests) }>
-            <Text>Guests</Text>
-          </TouchableOpacity>
-        </View>
+        <ScrollView>
+          <Image style={{ height: 400, width: ww }} source={ require('../img/cover.jpg') } />
+          <View style={{ flex: 1, flexDirection: 'row', width: ww }}>
+            <View style={{ flex: 1 }}>
+              <TouchableOpacity onPress={ () => Actions.schedule(this.state.con_data.events) }>
+                <Text>Schedule</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{ flex: 1 }}>
+              <TouchableOpacity onPress={ () => Actions.localMap() }>
+                <Text>Local Map</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{ flex: 1 }}>
+              <TouchableOpacity onPress={ () => Actions.guests(this.state.con_data.guests) }>
+                <Text>Guests</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
       </View>
     );
   }
