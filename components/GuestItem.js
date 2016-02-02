@@ -15,7 +15,7 @@ export default class GuestItem extends Component {
 
   render() {
     return (
-      <TouchableOpacity style={ styles.item } onPress={ () => Actions.guestDetail(this.props.item) }>
+      <TouchableOpacity style={ styles.item } onPress={ () => Actions.guests_one({ item: this.props.item }) }>
         <Text>{ this.props.item.name }</Text>
       </TouchableOpacity>
     );

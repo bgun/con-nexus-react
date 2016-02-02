@@ -15,7 +15,7 @@ export default class EventItem extends Component {
 
   render() {
     return (
-      <TouchableOpacity style={ styles.item } onPress={ () => Actions.eventDetail(this.props.item) }>
+      <TouchableOpacity style={ styles.item } onPress={ () => Actions.schedule_one({ item: this.props.item }) }>
         <Text>{ this.props.item.title }</Text>
       </TouchableOpacity>
     );

@@ -19,8 +19,9 @@ export default class GuestsView extends Component {
   constructor(props) {
     super();
     let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+    console.log("PROPS", props);
     this.state = {
-      dataSource: ds.cloneWithRows(props.data)
+      dataSource: ds.cloneWithRows(global.con_data.guests)
     };
   }
 
