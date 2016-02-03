@@ -28,7 +28,8 @@ export default class EventDetailView extends Component {
     return (
       <ScrollView style={ styles.view }>
         <Text style={ globalStyles.h1 }>{ event.title }</Text>
-        <View>
+        <Text>{ event.description }</Text>
+        <View style={ globalStyles.floatingList }>
           { event.guest_list ? event.guest_list.map(guest => (
             <GuestItem key={ guest.guest_id } item={ guest } />
           )) : null}

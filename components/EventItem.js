@@ -10,12 +10,14 @@ import React, {
 
 import { Actions } from 'react-native-router-flux';
 
+import globalStyles from '../globalStyles';
+
 
 export default class EventItem extends Component {
 
   render() {
     return (
-      <TouchableOpacity style={ styles.item } onPress={ () => Actions.schedule_one({ item: this.props.item }) }>
+      <TouchableOpacity style={[globalStyles.floatingListItem, styles.item]} onPress={ () => Actions.schedule_one({ item: this.props.item }) }>
         <Text>{ this.props.item.title }</Text>
       </TouchableOpacity>
     );
@@ -25,8 +27,6 @@ export default class EventItem extends Component {
 
 const styles = StyleSheet.create({
   item: {
-    borderColor: '#DDDDDD',
-    borderTopWidth: 1,
     height: 60,
     padding: 10
   }

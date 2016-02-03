@@ -6,7 +6,8 @@ import React, {
   StyleSheet,
   Text,
   TouchableHighlight,
-  View
+  View,
+  WebView
 } from 'react-native';
 
 import globalStyles from '../globalStyles';
@@ -28,7 +29,8 @@ export default class GuestDetailView extends Component {
     return (
       <ScrollView style={ styles.view }>
         <Text style={ globalStyles.h1 }>{ guest.name }</Text>
-        <View>
+        <WebView source={ guest.bio } />
+        <View style={ globalStyles.floatingList }>
           { guest.event_list ? guest.event_list.map(event => (
             <EventItem key={ event.event_id } item={ event } />
           )) : null}
