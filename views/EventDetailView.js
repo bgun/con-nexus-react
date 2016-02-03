@@ -9,9 +9,12 @@ import React, {
   View
 } from 'react-native';
 
+import HtmlView from 'react-native-htmlview';
+
 import globalStyles from '../globalStyles';
 
 import GuestItem from '../components/GuestItem';
+import { H1, H2, H3, H4 } from '../components/Headings';
 
 
 export default class EventDetailView extends Component {
@@ -27,8 +30,9 @@ export default class EventDetailView extends Component {
     }
     return (
       <ScrollView style={ styles.view }>
-        <Text style={ globalStyles.h1 }>{ event.title }</Text>
-        <Text>{ event.description }</Text>
+        <H1 style={ globalStyles.h1 }>{ event.title }</H1>
+        <HtmlView value={ event.description } />
+        <H4>Guests</H4>
         <View style={ globalStyles.floatingList }>
           { event.guest_list ? event.guest_list.map(guest => (
             <GuestItem key={ guest.guest_id } item={ guest } />
