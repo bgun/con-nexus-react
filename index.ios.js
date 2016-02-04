@@ -17,6 +17,7 @@ import { Router, Route, Schema, Animation, TabBar } from 'react-native-router-fl
 
 import DashboardView   from './views/DashboardView';
 import EventDetailView from './views/EventDetailView';
+import FeedbackView    from './views/FeedbackView';
 import GuestDetailView from './views/GuestDetailView';
 import GuestsView      from './views/GuestsView';
 import LocalMapView    from './views/LocalMapView';
@@ -88,6 +89,7 @@ class ConNexusReact extends Component {
       <Router hideNavBar={ true }>
         <Schema name="default" sceneConfig={ Navigator.SceneConfigs.FloatFromRight }/>
         <Schema name="tab" type="switch" icon={TabIcon} />
+        <Schema name="modal" sceneConfig={ Navigator.SceneConfigs.FloatFromBottom } />
 
         <Route name="tabbar">
           <Router hideNavBar={ true } footer={ TabBar } tabBarStyle={{borderTopColor:'#00bb00',height: 100,borderTopWidth:1,backgroundColor:'white'}}>
@@ -109,7 +111,8 @@ class ConNexusReact extends Component {
           </Router>
         </Route>
 
-        <Route name="localMap"     component={ LocalMapView    } title="Local Map" />
+        <Route schema="modal" name="feedback" component={ FeedbackView } title="Feedback" />
+        <Route name="localMap" component={ LocalMapView } title="Local Map" />
       </Router>
     );
   }

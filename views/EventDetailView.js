@@ -13,6 +13,7 @@ import HtmlView from 'react-native-htmlview';
 
 import globalStyles from '../globalStyles';
 
+import FeedbackButton from '../components/FeedbackButton';
 import GuestItem from '../components/GuestItem';
 import { H1, H2, H3, H4 } from '../components/Headings';
 
@@ -38,6 +39,7 @@ export default class EventDetailView extends Component {
             <GuestItem key={ guest.guest_id } item={ guest } />
           )) : null}
         </View>
+        <FeedbackButton subject={ event.title } />
       </ScrollView>
     );
   }
