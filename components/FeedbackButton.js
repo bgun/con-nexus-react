@@ -18,7 +18,7 @@ export default class FeedbackButton extends Component {
   render() {
     return (
       <TouchableOpacity style={ styles.button } onPress={ () => Actions.feedback({ subject: this.props.subject }) }>
-        <Text>Submit feedback for { this.props.subject }</Text>
+        <Text style={ styles.buttonText }>Submit feedback for { this.props.subject }</Text>
       </TouchableOpacity>
     );
   }
@@ -32,9 +32,11 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#666666',
     borderRadius: 10,
-    color: '#FFFFFF',
     height: 30,
     marginTop: 10,
     padding: 5
+  },
+  buttonText: {
+    color: '#FFFFFF'
   }
 });

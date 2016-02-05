@@ -19,11 +19,28 @@ import { H1, H2, H3, H4 } from '../components/Headings';
 
 
 export default class FeedbackView extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      text: null
+    }
+  }
+
+  handleInput(text) {
+    this.state.text = text;
+  }
+
   render() {
     return (
       <ScrollView style={ styles.view }>
         <H2>Feedback for { this.props.subject }</H2>
-        <TextInput style={ styles.input } value="here is some text" />
+        <TextInput
+          multiline={ true }
+          onChange={ this.handleInput.bind(this) }
+          style={ styles.input }
+          value={ this.state.text }
+        />
       </ScrollView>
     );
   }
@@ -35,7 +52,6 @@ FeedbackView.propTypes = {
 const styles = StyleSheet.create({
   view: {
     backgroundColor: '#FAFAFA',
-    marginTop: 63,
     padding: 20
   },
   input: {
@@ -43,6 +59,7 @@ const styles = StyleSheet.create({
     borderColor: '#EEEEEE',
     borderRadius: 10,
     borderWidth: 1,
+    fontSize: 16,
     height: 200,
     padding: 10
   }

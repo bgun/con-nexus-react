@@ -31,14 +31,6 @@ class TabIcon extends React.Component {
   }
 }
 
-class TestView extends React.Component {
-  render() {
-    return (
-      <View><Text>This is a Test</Text></View>
-    )
-  }
-}
-
 class ConNexusReact extends Component {
 
   constructor() {
@@ -89,7 +81,7 @@ class ConNexusReact extends Component {
       <Router hideNavBar={ true }>
         <Schema name="default" sceneConfig={ Navigator.SceneConfigs.FloatFromRight }/>
         <Schema name="tab" type="switch" icon={TabIcon} />
-        <Schema name="modal" sceneConfig={ Navigator.SceneConfigs.FloatFromBottom } />
+        <Schema name="modal" type="replace" sceneConfig={ Navigator.SceneConfigs.FloatFromBottom } />
 
         <Route name="tabbar">
           <Router hideNavBar={ true } footer={ TabBar } tabBarStyle={{borderTopColor:'#00bb00',height: 100,borderTopWidth:1,backgroundColor:'white'}}>
