@@ -20,6 +20,14 @@ let ww = Dimensions.get('window').width;
 
 export default class DashboardView extends Component {
 
+  constructor(props) {
+    super();
+    this.state = {
+      con_data: global.con_data || {}
+    }
+    console.log("Dashboard props",props);
+  }
+
   render() {
     console.log(ww, wh);
     return (

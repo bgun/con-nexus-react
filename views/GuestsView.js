@@ -30,10 +30,8 @@ export default class GuestsView extends Component {
       <ListView
         style={ styles.scroll }
         dataSource={ this.state.dataSource }
-        renderRow={(rowData) => (
-          <GuestItem key={ rowData._id } item={ rowData } />
-        )}
-        />
+        renderRow={ rowData => <GuestItem key={ rowData.guest_id } guest_id={ rowData.guest_id } /> }
+      />
     );
   }
 
@@ -42,7 +40,6 @@ export default class GuestsView extends Component {
 const styles = StyleSheet.create({
   scroll: {
     backgroundColor: '#FFFFFF',
-    flex: 1,
-    marginTop: 63
+    flex: 1
   }
 });

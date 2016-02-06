@@ -7,13 +7,19 @@ import React, {
   AppRegistry,
   AsyncStorage,
   Component,
+  Dimensions,
   Navigator,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View
 } from 'react-native';
 
-import { Route, Router } from 'react-native-router-flux';
+import { Actions, Route, Router, Schema, NavBar, TabBar } from 'react-native-router-flux';
+
+import Icon from 'react-native-vector-icons/FontAwesome';
+import SideMenu from 'react-native-side-menu';
+
 
 import DashboardView   from './views/DashboardView';
 import EventDetailView from './views/EventDetailView';
@@ -23,56 +29,36 @@ import GuestsView      from './views/GuestsView';
 import LocalMapView    from './views/LocalMapView';
 import ScheduleView    from './views/ScheduleView';
 
-import Icon from 'react-native-vector-icons/FontAwesome';
-import SideMenu from 'react-native-side-menu';
+import Header   from './components/Header'
+import Menu     from './components/Menu';
+import Tabbers  from './components/Tabbers'
+
 
 
 let TabIcon = (props) => (
   <View style={{ alignItems: 'center', flexDirection: 'column' }}>
     <Icon name="rocket" size={20} />
-    <Text style={{color: this.props.selected ? 'red' :'black'}}>{this.props.title}</Text>
+    <Text style={{color: props.selected ? 'red' :'black'}}>{ props.title }</Text>
   </View>
 );
 
-class Header extends React.Component {
-  render() {
-    return (
-      <View style={{ backgroundColor: '#FF0000' }}>
-        <Text>Header</Text>
-      </View>
-    )
-  }
-}
-
-class Menu extends React.Component {
-  render() {
-    return (
-      <View style={{ backgroundColor: '#00FF00' }}>
-        <Text>Menu</Text>
-      </View>
-    )
-  }
-}
 
 class ConNexusReact extends Component {
 
   constructor() {
     super();
     this.state = {
-      con_data: {}
+      menuOpen: false,
+      title: 'none'
     }
   }
 
   componentWillMount() {
-    console.log("test");
-    let t = this;
-
-    AsyncStorage.getItem('con_data', function(err, resp) {
+    AsyncStorage.getItem('con_data', (err, resp) => {
       console.log("what was in storage?");
       if (resp) {
-        console.log("found old data");
         global.con_data = JSON.parse(resp);
-        console.log(global.con_data);
+        console.log("found old data");
       } else {
         fetch('http://con-nexus.bgun.me/api/con/jcon2015', {
           headers: {
@@ -83,8 +69,8 @@ class ConNexusReact extends Component {
           .then(data => {
             console.log("fetched data");
             AsyncStorage.setItem('con_data', JSON.stringify(data), function() {
-              console.log("set new data");
               global.con_data = data;
+              console.log("set new data", global);
             });
           })
           .catch(err => {
@@ -98,37 +84,33 @@ class ConNexusReact extends Component {
     });
   }
 
+  openMenu() {
+    console.log("Toggle menu", this.state.menuOpen);
+    this.setState({
+      menuOpen: true
+    });
+  }
+
   render() {
-    console.log("DATA", this.state.con_data);
-
     return (
-      <SideMenu menu={ Menu }>
-        <Router header={ Header }>
-          <Route name="tabbar">
-            <Router hideNavBar={ true } footer={ TabBar }
-                    tabBarStyle={{borderTopColor:'#00bb00', borderTopWidth:1,backgroundColor:'white'}}>
-              <Route schema="tab" icon={ TabIcon } title="Home" name="dashboard" component={ DashboardView }/>
-              <Route schema="tab" icon={ TabIcon } title="Schedule" name="schedule">
-                <Router>
-                  <Route name="schedule_all" title="Schedule" component={ ScheduleView }/>
-                  <Route name="schedule_one" title="Event" component={ EventDetailView }/>
-                  <Route name="guests_one" title="Guest" component={ GuestDetailView }/>
-                  <Route name="feedback" title="Feedback" component={ FeedbackView } schema="modal"/>
-                </Router>
-              </Route>
-              <Route schema="tab" icon={ TabIcon } name="guests" title="Guests">
-                <Router>
-                  <Route name="guests_all" title="Guests" component={ GuestsView   }/>
-                  <Route name="schedule_one" title="Event" component={ EventDetailView }/>
-                  <Route name="guests_one" title="Guest" component={ GuestDetailView }/>
-                  <Route name="feedback" title="Feedback" component={ FeedbackView } schema="modal"/>
-                </Router>
-              </Route>
-            </Router>
-          </Route>
+      <SideMenu menu={ <Menu /> } menuPosition="right" isOpen={ this.state.menuOpen }>
+        <View style={{ flex: 1 }}>
+          <Router header={ Header } headerTitle={ this.state.title } footer={ Tabbers } onPressMenuButton={ () => this.openMenu() }>
+            <Schema name="modal"   sceneConfig={ Navigator.SceneConfigs.FloatFromBottom }/>
+            <Schema name="default" sceneConfig={ Navigator.SceneConfigs.FloatFromRight  }/>
+            <Schema name="tab" />
 
-          <Route name="localMap" component={ LocalMapView } title="Local Map"/>
-        </Router>
+            <Route name="dashboard" hideNavBar={true} schema="tab" title="Home"     component={ DashboardView } />
+            <Route name="schedule"  hideNavBar={true} schema="tab" title="Schedule" component={ ScheduleView }  />
+            <Route name="guests"    hideNavBar={true} schema="tab" title="Guests"   component={ GuestsView }    />
+
+            <Route name="eventDetail"  hideNavBar={true} title="Event"     component={ EventDetailView } />
+            <Route name="guestDetail"  hideNavBar={true} title="Guest"     component={ GuestDetailView } />
+
+            <Route name="feedback"     hideNavBar={true} title="Feedback"  component={ FeedbackView } schema="modal"/>
+            <Route name="localMap"     hideNavBar={true} title="Local Map" component={ LocalMapView } />
+          </Router>
+        </View>
       </SideMenu>
     )
   }

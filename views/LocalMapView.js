@@ -15,7 +15,9 @@ export default class LocalMapView extends React.Component {
   render() {
     return (
       <View style={ styles.container }>
-        <MapView />
+        <MapView
+          region={{ latitude: 40.74, longitude: -74 }}
+        />
       </View>
     );
   }

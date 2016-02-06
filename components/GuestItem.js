@@ -16,9 +16,13 @@ import globalStyles from '../globalStyles';
 export default class GuestItem extends Component {
 
   render() {
+    let guest = global.con_data.guests.filter(g => (g.guest_id === this.props.guest_id))[0];
+    if (!guest) {
+      throw new Error("Guest not found");
+    }
     return (
-      <TouchableOpacity style={[globalStyles.floatingListItem,styles.item]} onPress={ () => Actions.guests_one({ item: this.props.item }) }>
-        <Text>{ this.props.item.name }</Text>
+      <TouchableOpacity style={[globalStyles.floatingListItem,styles.item]} onPress={ () => Actions.guestDetail({ guest: guest }) }>
+        <Text>{ guest.name }</Text>
       </TouchableOpacity>
     );
   }

@@ -19,8 +19,9 @@ export default class ScheduleView extends Component {
   constructor(props) {
     super();
     let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+    let events = global.con_data.events;
     this.state = {
-      dataSource: ds.cloneWithRows(global.con_data.events),
+      dataSource: ds.cloneWithRows(events)
     };
   }
 
@@ -29,9 +30,7 @@ export default class ScheduleView extends Component {
       <ListView
         style={ styles.scroll }
         dataSource={ this.state.dataSource }
-        renderRow={(rowData) => (
-          <EventItem key={ rowData._id } item={ rowData } />
-        )}
+        renderRow={ rowData => <EventItem key={ rowData.event_id } event_id={ rowData.event_id } /> }
       />
     );
   }
@@ -41,7 +40,6 @@ export default class ScheduleView extends Component {
 const styles = StyleSheet.create({
   scroll: {
     backgroundColor: '#FFFFFF',
-    flex: 1,
-    marginTop: 63
+    flex: 1
   }
 });

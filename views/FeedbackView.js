@@ -52,7 +52,6 @@ FeedbackView.propTypes = {
 const styles = StyleSheet.create({
   view: {
     backgroundColor: '#FAFAFA',
-    marginTop: 63,
     padding: 20
   },
   input: {
