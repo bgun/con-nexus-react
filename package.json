@@ -7,8 +7,9 @@
   },
   "dependencies": {
     "react-native": "^0.18.1",
-    "react-native-htmlview": "^0.2.0",
-    "react-native-mapbox-gl": "^3.1.1",
-    "react-native-router-flux": "^2.1.4"
+    "react-native-mapbox-gl": "^3.2.0",
+    "react-native-router-flux": "^2.1.4",
+    "react-native-side-menu": "^0.18.0",
+    "react-native-vector-icons": "^1.1.1"
   }
 }

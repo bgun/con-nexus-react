@@ -13,7 +13,7 @@ import React, {
   View
 } from 'react-native';
 
-import { Router, Route, Schema, Animation, TabBar } from 'react-native-router-flux';
+import { Route, Router } from 'react-native-router-flux';
 
 import DashboardView   from './views/DashboardView';
 import EventDetailView from './views/EventDetailView';
@@ -23,11 +23,34 @@ import GuestsView      from './views/GuestsView';
 import LocalMapView    from './views/LocalMapView';
 import ScheduleView    from './views/ScheduleView';
 
-class TabIcon extends React.Component {
-  render(){
+import Icon from 'react-native-vector-icons/FontAwesome';
+import SideMenu from 'react-native-side-menu';
+
+
+let TabIcon = (props) => (
+  <View style={{ alignItems: 'center', flexDirection: 'column' }}>
+    <Icon name="rocket" size={20} />
+    <Text style={{color: this.props.selected ? 'red' :'black'}}>{this.props.title}</Text>
+  </View>
+);
+
+class Header extends React.Component {
+  render() {
     return (
-      <Text style={{color: this.props.selected ? 'red' :'black'}}>{this.props.title}</Text>
-    );
+      <View style={{ backgroundColor: '#FF0000' }}>
+        <Text>Header</Text>
+      </View>
+    )
+  }
+}
+
+class Menu extends React.Component {
+  render() {
+    return (
+      <View style={{ backgroundColor: '#00FF00' }}>
+        <Text>Menu</Text>
+      </View>
+    )
   }
 }
 
@@ -77,36 +100,37 @@ class ConNexusReact extends Component {
 
   render() {
     console.log("DATA", this.state.con_data);
+
     return (
-      <Router hideNavBar={ true }>
-        <Schema name="default" sceneConfig={ Navigator.SceneConfigs.FloatFromRight }/>
-        <Schema name="tab" type="switch" icon={TabIcon} />
-        <Schema name="modal" type="replace" sceneConfig={ Navigator.SceneConfigs.FloatFromBottom } />
+      <SideMenu menu={ Menu }>
+        <Router header={ Header }>
+          <Route name="tabbar">
+            <Router hideNavBar={ true } footer={ TabBar }
+                    tabBarStyle={{borderTopColor:'#00bb00', borderTopWidth:1,backgroundColor:'white'}}>
+              <Route schema="tab" icon={ TabIcon } title="Home" name="dashboard" component={ DashboardView }/>
+              <Route schema="tab" icon={ TabIcon } title="Schedule" name="schedule">
+                <Router>
+                  <Route name="schedule_all" title="Schedule" component={ ScheduleView }/>
+                  <Route name="schedule_one" title="Event" component={ EventDetailView }/>
+                  <Route name="guests_one" title="Guest" component={ GuestDetailView }/>
+                  <Route name="feedback" title="Feedback" component={ FeedbackView } schema="modal"/>
+                </Router>
+              </Route>
+              <Route schema="tab" icon={ TabIcon } name="guests" title="Guests">
+                <Router>
+                  <Route name="guests_all" title="Guests" component={ GuestsView   }/>
+                  <Route name="schedule_one" title="Event" component={ EventDetailView }/>
+                  <Route name="guests_one" title="Guest" component={ GuestDetailView }/>
+                  <Route name="feedback" title="Feedback" component={ FeedbackView } schema="modal"/>
+                </Router>
+              </Route>
+            </Router>
+          </Route>
 
-        <Route name="tabbar">
-          <Router hideNavBar={ true } footer={ TabBar } tabBarStyle={{borderTopColor:'#00bb00',height: 100,borderTopWidth:1,backgroundColor:'white'}}>
-            <Route schema="tab" title="Home"     name="dashboard"    component={ DashboardView } />
-            <Route schema="tab" name="schedule" title="Schedule">
-              <Router>
-                <Route name="schedule_all" title="Schedule" component={ ScheduleView } />
-                <Route name="schedule_one" title="Event"    component={ EventDetailView } />
-                <Route name="guests_one"   title="Guest"    component={ GuestDetailView } />
-              </Router>
-            </Route>
-            <Route schema="tab" name="guests" title="Guests">
-              <Router>
-                <Route name="guests_all"   title="Guests" component={ GuestsView   } />
-                <Route name="schedule_one" title="Event"  component={ EventDetailView } />
-                <Route name="guests_one"   title="Guest"  component={ GuestDetailView } />
-              </Router>
-            </Route>
-          </Router>
-        </Route>
-
-        <Route schema="modal" name="feedback" component={ FeedbackView } title="Feedback" />
-        <Route name="localMap" component={ LocalMapView } title="Local Map" />
-      </Router>
-    );
+          <Route name="localMap" component={ LocalMapView } title="Local Map"/>
+        </Router>
+      </SideMenu>
+    )
   }
 }
 
