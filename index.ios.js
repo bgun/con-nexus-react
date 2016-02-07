@@ -21,6 +21,7 @@ import Icon from 'react-native-vector-icons/Entypo';
 import SideMenu from 'react-native-side-menu';
 
 
+import AboutView       from './views/AboutView';
 import DashboardView   from './views/DashboardView';
 import EventDetailView from './views/EventDetailView';
 import FeedbackView    from './views/FeedbackView';
@@ -105,6 +106,7 @@ class ConNexusReact extends Component {
 
             <Route name="localMap"  title="Local Map" component={ LocalMapView } />
             <Route name="feedback"  title="Feedback"  component={ FeedbackView } schema="modal"/>
+            <Route name="about"     title="About"     component={ AboutView    } />
           </Router>
         </View>
         <TouchableOpacity style={ styles.menuButton } onPress={ () => this.openMenu() }>
