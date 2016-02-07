@@ -80,9 +80,15 @@ class ConNexusReact extends Component {
     });
   }
 
+  closeMenu() {
+    this.setState({
+      menuOpen: false
+    });
+  }
+
   render() {
     return (
-      <SideMenu menu={ <Menu /> } menuPosition="right" isOpen={ this.state.menuOpen }>
+      <SideMenu menu={ <Menu onAction={ () => this.closeMenu() } /> } menuPosition="right" isOpen={ this.state.menuOpen }>
         <View style={{ flex: 1 }}>
           <Router sceneStyle={ styles.scene } navigationBarStyle={ styles.navbar } footer={ Tabbers } onPressMenuButton={ () => this.openMenu() }>
             <Schema name="modal"   sceneConfig={ Navigator.SceneConfigs.FloatFromBottom }/>
