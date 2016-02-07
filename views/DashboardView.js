@@ -25,32 +25,13 @@ export default class DashboardView extends Component {
     this.state = {
       con_data: global.con_data || {}
     }
-    console.log("Dashboard props",props);
   }
 
   render() {
-    console.log(ww, wh);
     return (
       <View style={ styles.container }>
         <ScrollView>
           <Image style={{ height: 350, width: ww }} source={ require('../img/mysticon.jpg') } />
-          <View style={{ flex: 1, flexDirection: 'row', width: ww }}>
-            <View style={{ flex: 1 }}>
-              <TouchableOpacity onPress={ () => Actions.schedule(this.state.con_data.events) }>
-                <Text>Schedule</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={{ flex: 1 }}>
-              <TouchableOpacity onPress={ () => Actions.localMap() }>
-                <Text>Local Map</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={{ flex: 1 }}>
-              <TouchableOpacity onPress={ () => Actions.guests(this.state.con_data.guests) }>
-                <Text>Guests</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
         </ScrollView>
       </View>
     );

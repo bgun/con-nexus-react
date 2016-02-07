@@ -37,7 +37,7 @@ export default class FeedbackView extends Component {
         <H2>Feedback for { this.props.subject }</H2>
         <TextInput
           multiline={ true }
-          onChange={ this.handleInput.bind(this) }
+          onChangeText={ this.handleInput.bind(this) }
           style={ styles.input }
           value={ this.state.text }
         />

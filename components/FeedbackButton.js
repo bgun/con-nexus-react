@@ -30,13 +30,15 @@ FeedbackButton.propTypes = {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#666666',
+    alignItems: 'center',
+    backgroundColor: '#445588',
     borderRadius: 10,
-    height: 30,
     marginTop: 10,
-    padding: 5
+    paddingHorizontal: 20,
+    paddingVertical: 10
   },
   buttonText: {
-    color: '#FFFFFF'
+    color: '#FFFFFF',
+    textAlign: 'center'
   }
 });

@@ -5,7 +5,6 @@ import React, {
   StyleSheet,
   MapView,
   Text,
-  StatusBarIOS,
   View
 } from 'react-native';
 

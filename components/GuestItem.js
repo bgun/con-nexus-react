@@ -22,7 +22,7 @@ export default class GuestItem extends Component {
     }
     return (
       <TouchableOpacity style={[globalStyles.floatingListItem,styles.item]} onPress={ () => Actions.guestDetail({ guest: guest }) }>
-        <Text>{ guest.name }</Text>
+        <Text style={ styles.text }>{ guest.name }</Text>
       </TouchableOpacity>
     );
   }
@@ -31,7 +31,10 @@ export default class GuestItem extends Component {
 
 const styles = StyleSheet.create({
   item: {
-    height: 60,
-    padding: 10
+    paddingHorizontal: 10,
+    paddingVertical: 16
+  },
+  text: {
+    fontSize: 16,
   }
 });

@@ -10,17 +10,36 @@ let {
 
 import { Actions } from 'react-native-router-flux';
 
+import Icon from 'react-native-vector-icons/Entypo';
 
 let window = Dimensions.get('window');
+
+
+class TabIcon extends React.Component {
+  handlePress() {
+    this.setState({
+      selected: true
+    });
+    Actions[this.props.action]();
+  }
+  render() {
+    return (
+      <TouchableOpacity style={ styles.tab } onPress={ this.handlePress.bind(this) }>
+        <Icon name={ this.props.icon } size={20} />
+        <Text>{ this.props.text }</Text>
+      </TouchableOpacity>
+    );
+  }
+}
 
 export default class Tabbers extends React.Component {
   render() {
     return (
       <View style={ styles.container }>
-        <TouchableOpacity style={ styles.tab } onPress={ () => Actions.dashboard() }><Text>Home</Text></TouchableOpacity>
-        <TouchableOpacity style={ styles.tab } onPress={ () => Actions.schedule()  }><Text>Schedule</Text></TouchableOpacity>
-        <TouchableOpacity style={ styles.tab } onPress={ () => Actions.guests()    }><Text>Guests</Text></TouchableOpacity>
-        <TouchableOpacity style={ styles.tab } onPress={ () => Actions.schedule()  }><Text>News</Text></TouchableOpacity>
+        <TabIcon icon="home"     action="dashboard" text="Home" />
+        <TabIcon icon="calendar" action="schedule"  text="Schedule" />
+        <TabIcon icon="users"    action="guests"    text="Guests" />
+        <TabIcon icon="map"      action="hotelMap"  text="Map" />
       </View>
     );
   }
@@ -29,11 +48,15 @@ export default class Tabbers extends React.Component {
 let styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
+    borderColor: '#DDDDDD',
+    borderTopWidth: 1,
     flexDirection: 'row',
     height: 50
   },
   tab: {
+    alignItems: 'center',
     flex: 1,
-    alignItems: 'center'
+    flexDirection: 'column',
+    paddingTop: 7
   }
 });

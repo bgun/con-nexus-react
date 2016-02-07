@@ -17,7 +17,7 @@ import React, {
 
 import { Actions, Route, Router, Schema, NavBar, TabBar } from 'react-native-router-flux';
 
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Entypo';
 import SideMenu from 'react-native-side-menu';
 
 
@@ -26,21 +26,12 @@ import EventDetailView from './views/EventDetailView';
 import FeedbackView    from './views/FeedbackView';
 import GuestDetailView from './views/GuestDetailView';
 import GuestsView      from './views/GuestsView';
+import HotelMapView    from './views/HotelMapView';
 import LocalMapView    from './views/LocalMapView';
 import ScheduleView    from './views/ScheduleView';
 
-import Header   from './components/Header'
 import Menu     from './components/Menu';
 import Tabbers  from './components/Tabbers'
-
-
-
-let TabIcon = (props) => (
-  <View style={{ alignItems: 'center', flexDirection: 'column' }}>
-    <Icon name="rocket" size={20} />
-    <Text style={{color: props.selected ? 'red' :'black'}}>{ props.title }</Text>
-  </View>
-);
 
 
 class ConNexusReact extends Component {
@@ -48,8 +39,7 @@ class ConNexusReact extends Component {
   constructor() {
     super();
     this.state = {
-      menuOpen: false,
-      title: 'none'
+      menuOpen: false
     }
   }
 
@@ -85,7 +75,6 @@ class ConNexusReact extends Component {
   }
 
   openMenu() {
-    console.log("Toggle menu", this.state.menuOpen);
     this.setState({
       menuOpen: true
     });
@@ -95,25 +84,48 @@ class ConNexusReact extends Component {
     return (
       <SideMenu menu={ <Menu /> } menuPosition="right" isOpen={ this.state.menuOpen }>
         <View style={{ flex: 1 }}>
-          <Router header={ Header } headerTitle={ this.state.title } footer={ Tabbers } onPressMenuButton={ () => this.openMenu() }>
+          <Router sceneStyle={ styles.scene } navigationBarStyle={ styles.navbar } footer={ Tabbers } onPressMenuButton={ () => this.openMenu() }>
             <Schema name="modal"   sceneConfig={ Navigator.SceneConfigs.FloatFromBottom }/>
             <Schema name="default" sceneConfig={ Navigator.SceneConfigs.FloatFromRight  }/>
             <Schema name="tab" />
 
-            <Route name="dashboard" hideNavBar={true} schema="tab" title="Home"     component={ DashboardView } />
-            <Route name="schedule"  hideNavBar={true} schema="tab" title="Schedule" component={ ScheduleView }  />
-            <Route name="guests"    hideNavBar={true} schema="tab" title="Guests"   component={ GuestsView }    />
+            <Route name="dashboard" schema="tab" title="Home"      component={ DashboardView } />
+            <Route name="schedule"  schema="tab" title="Schedule"  component={ ScheduleView }  />
+            <Route name="guests"    schema="tab" title="Guests"    component={ GuestsView }    />
+            <Route name="hotelMap"  schema="tab" title="Hotel Map" component={ HotelMapView } />
 
-            <Route name="eventDetail"  hideNavBar={true} title="Event"     component={ EventDetailView } />
-            <Route name="guestDetail"  hideNavBar={true} title="Guest"     component={ GuestDetailView } />
+            <Route name="eventDetail" title="Event"     component={ EventDetailView } />
+            <Route name="guestDetail" title="Guest"     component={ GuestDetailView } />
 
-            <Route name="feedback"     hideNavBar={true} title="Feedback"  component={ FeedbackView } schema="modal"/>
-            <Route name="localMap"     hideNavBar={true} title="Local Map" component={ LocalMapView } />
+            <Route name="localMap"  title="Local Map" component={ LocalMapView } />
+            <Route name="feedback"  title="Feedback"  component={ FeedbackView } schema="modal"/>
           </Router>
         </View>
+        <TouchableOpacity style={ styles.menuButton } onPress={ () => this.openMenu() }>
+          <Icon name="menu" size={32} color="white" />
+        </TouchableOpacity>
       </SideMenu>
     )
   }
 }
+
+let styles = StyleSheet.create({
+  menuButton: {
+    alignItems: 'center',
+    height: 50,
+    justifyContent: 'center',
+    marginTop: 20,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    width: 50
+  },
+  navbar: {
+    backgroundColor: 'blue'
+  },
+  scene: {
+    paddingTop: 63
+  }
+});
 
 AppRegistry.registerComponent('ConNexusReact', () => ConNexusReact);
