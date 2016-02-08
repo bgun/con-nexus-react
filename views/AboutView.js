@@ -1,6 +1,7 @@
 'use strict';
 
 import React, {
+  Alert,
   Component,
   ScrollView,
   StyleSheet,
@@ -11,9 +12,9 @@ import React, {
 
 import HtmlView from 'react-native-htmlview';
 
-import globalStyles from '../globalStyles';
-
 import { H1, H2, H3, H4 } from '../components/Headings';
+
+import globalStyles from '../globalStyles';
 
 
 let aboutText = `
@@ -27,7 +28,7 @@ export default class AboutView extends Component {
     return (
       <ScrollView style={ styles.view }>
         <H1>About This App</H1>
-        <HtmlView value={ aboutText } />
+        <HtmlView style={{ fontSize: 16 }} value={ aboutText } />
       </ScrollView>
     );
   }

@@ -4,6 +4,7 @@
  */
 'use strict';
 import React, {
+  Alert,
   AppRegistry,
   AsyncStorage,
   Component,
@@ -40,39 +41,44 @@ class ConNexusReact extends Component {
   constructor() {
     super();
     this.state = {
+      loading: true,
       menuOpen: false
     }
   }
 
   componentWillMount() {
-    AsyncStorage.getItem('con_data', (err, resp) => {
-      console.log("what was in storage?");
-      if (resp) {
-        global.con_data = JSON.parse(resp);
-        console.log("found old data");
-      } else {
-        fetch('http://con-nexus.bgun.me/api/con/jcon2015', {
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          }
-        }).then(resp => resp.json())
-          .then(data => {
-            console.log("fetched data");
-            AsyncStorage.setItem('con_data', JSON.stringify(data), function() {
-              global.con_data = data;
-              console.log("set new data", global);
-            });
-          })
-          .catch(err => {
-            console.warn(err);
-          });
-      }
 
-    })
-    .catch(function() {
-      console.error("error fetching data");
-    });
+    // if nothing is in stoage, we have to update
+
+    // if storage date matches basic date, no need to update
+
+    // if no network, no update
+
+    // if basic date > storage date, update
+
+    dataStore.checkForUpdate()
+      .then(isNew => {
+        if (isNew) {
+          Alert.alert(
+            'Convention data update',
+            'Some info has changed. Update now?',
+            [//{text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+              { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+              { text: 'OK',     onPress: () => this.fetchData.bind(this) }]
+          );
+        }
+      });
+  }
+
+  fetchData() {
+    dataStore.fetchFromNetwork()
+      .then(data => {
+        global.con_data = data;
+        // TODO: hide loader
+      })
+      .catch(err => {
+        throw err;
+      });
   }
 
   openMenu() {
@@ -89,30 +95,36 @@ class ConNexusReact extends Component {
 
   render() {
     return (
-      <SideMenu menu={ <Menu onAction={ () => this.closeMenu() } /> } menuPosition="right" isOpen={ this.state.menuOpen }>
-        <View style={{ flex: 1 }}>
-          <Router sceneStyle={ styles.scene } navigationBarStyle={ styles.navbar } footer={ Tabbers } onPressMenuButton={ () => this.openMenu() }>
-            <Schema name="modal"   sceneConfig={ Navigator.SceneConfigs.FloatFromBottom }/>
-            <Schema name="default" sceneConfig={ Navigator.SceneConfigs.FloatFromRight  }/>
-            <Schema name="tab" />
+      <View>
+        { this.state.loading ? (
+          <Text>Loading...</Text>
+        ) : (
+          <SideMenu menu={ <Menu onAction={ () => this.closeMenu() } /> } menuPosition="right" isOpen={ this.state.menuOpen }>
+            <View style={{ flex: 1 }}>
+              <Router sceneStyle={ styles.scene } navigationBarStyle={ styles.navbar } footer={ Tabbers } onPressMenuButton={ () => this.openMenu() }>
+                <Schema name="modal"   sceneConfig={ Navigator.SceneConfigs.FloatFromBottom }/>
+                <Schema name="default" sceneConfig={ Navigator.SceneConfigs.FloatFromRight  }/>
+                <Schema name="tab" />
 
-            <Route name="dashboard" schema="tab" title="Home"      component={ DashboardView } />
-            <Route name="schedule"  schema="tab" title="Schedule"  component={ ScheduleView }  />
-            <Route name="guests"    schema="tab" title="Guests"    component={ GuestsView }    />
-            <Route name="hotelMap"  schema="tab" title="Hotel Map" component={ HotelMapView } />
+                <Route name="dashboard" schema="tab" title="Home"      component={ DashboardView } />
+                <Route name="schedule"  schema="tab" title="Schedule"  component={ ScheduleView }  />
+                <Route name="guests"    schema="tab" title="Guests"    component={ GuestsView }    />
+                <Route name="hotelMap"  schema="tab" title="Hotel Map" component={ HotelMapView } />
 
-            <Route name="eventDetail" title="Event"     component={ EventDetailView } />
-            <Route name="guestDetail" title="Guest"     component={ GuestDetailView } />
+                <Route name="eventDetail" title="Event"     component={ EventDetailView } />
+                <Route name="guestDetail" title="Guest"     component={ GuestDetailView } />
 
-            <Route name="localMap"  title="Local Map" component={ LocalMapView } />
-            <Route name="feedback"  title="Feedback"  component={ FeedbackView } schema="modal"/>
-            <Route name="about"     title="About"     component={ AboutView    } />
-          </Router>
-        </View>
-        <TouchableOpacity style={ styles.menuButton } onPress={ () => this.openMenu() }>
-          <Icon name="menu" size={32} color="white" />
-        </TouchableOpacity>
-      </SideMenu>
+                <Route name="localMap"  title="Local Map" component={ LocalMapView } />
+                <Route name="feedback"  title="Feedback"  component={ FeedbackView } schema="modal"/>
+                <Route name="about"     title="About"     component={ AboutView    } />
+              </Router>
+            </View>
+            <TouchableOpacity style={ styles.menuButton } onPress={ () => this.openMenu() }>
+              <Icon name="menu" size={32} color="white" />
+            </TouchableOpacity>
+          </SideMenu>
+        )};
+      </View>
     )
   }
 }
