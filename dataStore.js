@@ -16,45 +16,30 @@ let fetchOptions = {
 
 export default {
 
-  checkForUpdates: () => {
-    fetch('http://con-nexus.bgun.me/api/con/jcon2015', fetchOptions)
-      .then(resp => resp.json())
-      .then(data => {
-        console.log("fetched data");
-        AsyncStorage.setItem('con_data', JSON.stringify(data), function() {
-          global.con_data = data;
-          console.log("set new data", global);
-        });
-      })
-  },
-
   fetchFromNetwork: () => {
-    fetch('http://con-nexus.bgun.me/api/con/jcon2015', fetchOptions)
-      .then(resp => resp.json())
-      .then(data => {
-        console.log("fetched data");
-        AsyncStorage.setItem('con_data', JSON.stringify(data), function() {
-          global.con_data = data;
-          console.log("set new data", global);
+    return new Promise((resolve, reject) => {
+      fetch('http://con-nexus.bgun.me/api/con/jcon2015', fetchOptions)
+        .then(resp => resp.json())
+        .then(data => {
+          console.log("fetched data from network", typeof data);
+          resolve(data);
+        })
+        .catch(err => {
+          resolve(null)
         });
-      })
+    });
   },
 
   fetchFromStorage: () => {
-    return new Promise((finalResolve, reject) => {
-      AsyncStorage.getItem('con_data', (err, resp) => {
-        console.log("what was in storage?", resp);
-        if (err) {
-
-        } else if (resp) {
-          global.con_data = JSON.parse(resp);
-            global.con_data = data;
-        } else {
-        }
-      })
-      .catch(function() {
-        console.error("error fetching data");
-      });
+    return new Promise((resolve, reject) => {
+      AsyncStorage.getItem('con_data')
+        .then(resp => {
+          console.log("what was in storage?", typeof resp);
+          resolve(JSON.parse(resp));
+        })
+        .catch(err => {
+          resolve(null);
+        });
     });
   }
 
