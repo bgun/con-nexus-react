@@ -82,6 +82,9 @@ class ConNexusReact extends Component {
       this.setState({
         loading: false
       });
+    })
+    .catch(err => {
+      throw err;
     });
   }
 

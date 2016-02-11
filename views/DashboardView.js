@@ -48,7 +48,7 @@ export default class DashboardView extends Component {
   render() {
     let todos = Array.from(this.state.todos);
     console.log("todos", todos);
-    let views = todos.map(e => <EventItem key={ e } event_id={ e } />);
+    let views = todos.map(e => <EventItem key={e} event_id={ e } />);
     console.log("dash", views);
 
     return (

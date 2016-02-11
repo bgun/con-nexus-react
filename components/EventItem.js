@@ -8,6 +8,7 @@ import React, {
   View
 } from 'react-native';
 
+import _      from 'lodash';
 import moment from 'moment';
 
 import { Actions } from 'react-native-router-flux';
@@ -17,8 +18,13 @@ import globalStyles from '../globalStyles';
 
 export default class EventItem extends Component {
 
+  constructor(props) {
+    super();
+    console.log("NEW EVENT ITEM", props);
+  }
+
   render() {
-    let event = global.con_data.events.filter(e => (e.event_id === this.props.event_id))[0];
+    let event = _.find(global.con_data.events, e => (e.event_id === this.props.event_id));
     console.log("event", event);
     if (!event) {
       throw new Error("Event not found!");
