@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react-native';
+import _     from 'lodash';
 
 let {
   Component,
@@ -20,8 +21,9 @@ export default class GuestsView extends Component {
     super();
     let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     console.log("PROPS", props);
+    let sortedGuests = _.sortBy(global.con_data.guests, 'name');
     this.state = {
-      dataSource: ds.cloneWithRows(global.con_data.guests)
+      dataSource: ds.cloneWithRows(sortedGuests)
     };
   }
 

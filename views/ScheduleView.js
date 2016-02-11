@@ -27,10 +27,7 @@ export default class ScheduleView extends Component {
   constructor(props) {
     super();
 
-    console.log("schedule", props);
-
     var getSectionData = (dataBlob, sectionID) => {
-      console.log("getsectiondata", sectionID);
       return dataBlob[sectionID];
     };
 
@@ -44,7 +41,7 @@ export default class ScheduleView extends Component {
     let currentDay = null;
 
     global.con_data.events.forEach(e => {
-      let d = moment(e.datetime);
+      let d = moment.utc(e.datetime, "YYYY-MM-DDThh:mm:ss");
       let day = days[d.day()];
       if (day !== currentDay) {
         console.log("new day", d.day());
@@ -103,7 +100,6 @@ export default class ScheduleView extends Component {
   }
 
   render() {
-    console.log("results", this.state.searchResults);
     return (
       <View>
         { this.state.searchResults.length ? (

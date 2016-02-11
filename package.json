@@ -6,10 +6,12 @@
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
+    "lodash": "^4.3.0",
     "moment": "^2.11.2",
     "react-native": "^0.18.1",
     "react-native-htmlview": "^0.2.0",
     "react-native-router-flux": "^2.1.4",
+    "react-native-scrollable-tab-view": "^0.3.5",
     "react-native-side-menu": "^0.18.0",
     "react-native-vector-icons": "^1.1.1"
   }

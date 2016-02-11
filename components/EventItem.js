@@ -19,11 +19,18 @@ export default class EventItem extends Component {
 
   render() {
     let event = global.con_data.events.filter(e => (e.event_id === this.props.event_id))[0];
-    let formatDate = moment(event.datetime).format('dddd h:mma');
+    console.log("event", event);
+    if (!event) {
+      throw new Error("Event not found!");
+    }
+    let formatDate = moment.utc(event.datetime).format('dddd h:mma');
     return (
-      <TouchableOpacity style={[globalStyles.floatingListItem, styles.item]} onPress={ () => Actions.eventDetail({ event: event }) }>
+      <TouchableOpacity style={[globalStyles.floatingListItem, styles.item]} onPress={ () => Actions.eventDetail({ event_id: event.event_id }) }>
         <Text style={ styles.titleText }>{ event.title }</Text>
-        <Text style={ styles.timeText  }>{ formatDate }</Text>
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={ styles.timeText  }>{ formatDate }</Text>
+          <Text style={ styles.locationText  }>{ event.location }</Text>
+        </View>
       </TouchableOpacity>
     );
   }
@@ -41,5 +48,10 @@ const styles = StyleSheet.create({
   timeText: {
     color: '#666666',
     fontSize: 13
+  },
+  locationText: {
+    color: '#CC7744',
+    fontSize: 13,
+    marginLeft: 13
   }
 });

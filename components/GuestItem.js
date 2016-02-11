@@ -21,7 +21,7 @@ export default class GuestItem extends Component {
       throw new Error("Guest not found");
     }
     return (
-      <TouchableOpacity style={[globalStyles.floatingListItem,styles.item]} onPress={ () => Actions.guestDetail({ guest: guest }) }>
+      <TouchableOpacity style={[globalStyles.floatingListItem,styles.item]} onPress={ () => Actions.guestDetail({ guest_id: guest.guest_id }) }>
         <Text style={ styles.text }>{ guest.name }</Text>
       </TouchableOpacity>
     );

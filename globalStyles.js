@@ -3,6 +3,8 @@
 let _borderColor = '#DDDDDD';
 
 export default {
+  COLORS: {
+  },
   floatingList: {
     backgroundColor: '#FFFFFF',
     borderColor: _borderColor,
