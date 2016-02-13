@@ -73,17 +73,16 @@ export default class ScheduleView extends Component {
       let filteredEvents = global.con_data.events.filter(e => {
         return e.title.toLowerCase().indexOf(text.toLowerCase()) > -1;
       });
-      console.log("Displaying events", filteredEvents);
-      this.setState = {
+      this.setState({
         searchResults: filteredEvents,
         filterText: text
-      };
-      this.render();
+      });
+      console.log("Displaying events", filteredEvents);
     } else {
-      this.setState = {
+      this.setState({
         searchResults: [],
         filterText: text
-      };
+      });
     }
   }
 
@@ -103,11 +102,14 @@ export default class ScheduleView extends Component {
     return (
       <View>
         { this.state.searchResults.length ? (
-          <ScrollView style={ styles.searchResults }>
-            { this.state.searchResults.map(sr => (
-              <EventItem key={ sr.event_id } event_id={ sr.event_id } />
-            ) ) }
-          </ScrollView>
+          <View>
+            <View style={ styles.searchResultsHeader }><Text>Search results</Text></View>
+            <ScrollView style={ styles.searchResults }>
+              { this.state.searchResults.map(sr => (
+                <EventItem key={ sr.event_id } event_id={ sr.event_id } />
+              ) ) }
+            </ScrollView>
+          </View>
         ) : (
           <ListView
             style={ styles.scroll }
@@ -150,13 +152,15 @@ const styles = StyleSheet.create({
   },
   searchResults: {
     backgroundColor: '#F8F8F8',
-    padding: 10,
-    marginTop: 39,
     height: window.height - 40,
     position: 'absolute',
-      top: 0,
       left: 0,
     width: window.width
+  },
+  searchResultsHeader: {
+    backgroundColor: 'gray',
+    marginTop: 39,
+    padding: 10
   },
   section: {
     backgroundColor: 'gray',

@@ -17,11 +17,11 @@ import _ from 'lodash';
 
 import { Actions } from 'react-native-router-flux';
 
+
 import dataStore from '../dataStore';
 import EventItem from '../components/EventItem';
 
-let wh = Dimensions.get('window').height;
-let ww = Dimensions.get('window').width;
+let window = Dimensions.get('window');
 
 
 export default class DashboardView extends Component {
@@ -53,9 +53,11 @@ export default class DashboardView extends Component {
     return (
       <View style={ styles.container }>
         <ScrollView style={{ flexDirection: 'column' }}>
-          <Image style={{ flex: 1, height: 350, width: ww }} source={ require('../img/mysticon.jpg') } />
+          <Image style={{ flex: 1, height: 350, width: window.width }} source={ require('../img/mysticon.jpg') } />
+          <Text style={{ paddingHorizontal: 10, paddingVertical: 5 }}>My Todo List</Text>
           <ListView
-            style={{ flex: 1 }}
+            tabLabel="My Todo List"
+            style={{ flex: 1, width: window.width }}
             dataSource={ this.state.dataSource }
             renderRow={ rowData => <EventItem key={ rowData.event_id } event_id={ rowData.event_id } /> }
           />
@@ -69,7 +71,7 @@ export default class DashboardView extends Component {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: '#FFFF00',
+    backgroundColor: '#F8F8F8',
     flex: 1,
     justifyContent: 'center'
   }

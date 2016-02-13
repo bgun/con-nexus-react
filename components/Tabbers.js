@@ -25,7 +25,7 @@ class TabIcon extends React.Component {
   render() {
     return (
       <TouchableOpacity style={ styles.tab } onPress={ this.handlePress.bind(this) }>
-        <Icon name={ this.props.icon } size={20} />
+        <Icon name={ this.props.icon } color="white" size={20} />
         <Text>{ this.props.text }</Text>
       </TouchableOpacity>
     );
@@ -47,7 +47,7 @@ export default class Tabbers extends React.Component {
 
 let styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: '#AA55DD',
     borderColor: '#DDDDDD',
     borderTopWidth: 1,
     flexDirection: 'row',

@@ -98,37 +98,40 @@ class ConNexusReact extends Component {
   }
 
   render() {
-
     let isLoadingStyle = this.state.loading ? { bottom: 0 } : {};
-
     return (
-      <SideMenu menu={ <Menu onAction={ () => this.closeMenu() } /> } menuPosition="right" isOpen={ this.state.menuOpen }>
-        <View style={{ flex: 1 }}>
-          <Router sceneStyle={ styles.scene } navigationBarStyle={ styles.navbar } footer={ Tabbers } onPressMenuButton={ () => this.openMenu() }>
-            <Schema name="modal"   sceneConfig={ Navigator.SceneConfigs.FloatFromBottom }/>
-            <Schema name="default" sceneConfig={ Navigator.SceneConfigs.FloatFromRight  }/>
-            <Schema name="tab" />
-
-            <Route name="dashboard" schema="tab" title="Home"      component={ DashboardView } />
-            <Route name="schedule"  schema="tab" title="Schedule"  component={ ScheduleView }  />
-            <Route name="guests"    schema="tab" title="Guests"    component={ GuestsView }    />
-            <Route name="hotelMap"  schema="tab" title="Hotel Map" component={ HotelMapView } />
-
-            <Route name="eventDetail" title="Event"     component={ EventDetailView } />
-            <Route name="guestDetail" title="Guest"     component={ GuestDetailView } />
-
-            <Route name="localMap"  title="Local Map" component={ LocalMapView } />
-            <Route name="feedback"  title="Feedback"  component={ FeedbackView } schema="modal"/>
-            <Route name="about"     title="About"     component={ AboutView    } />
-          </Router>
-        </View>
-        <TouchableOpacity style={ styles.menuButton } onPress={ () => this.openMenu() }>
-          <Icon name="menu" size={32} color="white" />
-        </TouchableOpacity>
+      <View style={{ flex: 1 }}>
+        { this.state.loading ? (
         <View style={[ styles.loading, isLoadingStyle ]}>
           <Text>Loading...</Text>
         </View>
-      </SideMenu>
+        ) : (
+        <SideMenu menu={ <Menu onAction={ () => this.closeMenu() } /> } menuPosition="right" isOpen={ this.state.menuOpen }>
+          <View style={{ flex: 1 }}>
+            <Router sceneStyle={ styles.scene } navigationBarStyle={ styles.navbar } footer={ Tabbers } onPressMenuButton={ () => this.openMenu() }>
+              <Schema name="modal"   sceneConfig={ Navigator.SceneConfigs.FloatFromBottom }/>
+              <Schema name="default" sceneConfig={ Navigator.SceneConfigs.FloatFromRight  }/>
+              <Schema name="tab" />
+
+              <Route name="dashboard" schema="tab" title="Home"      component={ DashboardView } />
+              <Route name="schedule"  schema="tab" title="Schedule"  component={ ScheduleView }  />
+              <Route name="guests"    schema="tab" title="Guests"    component={ GuestsView }    />
+              <Route name="hotelMap"  schema="tab" title="Hotel Map" component={ HotelMapView } />
+
+              <Route name="eventDetail" title="Event"     component={ EventDetailView } />
+              <Route name="guestDetail" title="Guest"     component={ GuestDetailView } />
+
+              <Route name="localMap"  title="Local Map" component={ LocalMapView } />
+              <Route name="feedback"  title="Feedback"  component={ FeedbackView } schema="modal"/>
+              <Route name="about"     title="About"     component={ AboutView    } />
+            </Router>
+          </View>
+          <TouchableOpacity style={ styles.menuButton } onPress={ () => this.openMenu() }>
+            <Icon name="menu" size={32} color="white" />
+          </TouchableOpacity>
+        </SideMenu>
+        ) }
+      </View>
     )
   }
 }
@@ -152,7 +155,9 @@ let styles = StyleSheet.create({
       right: 0
   },
   navbar: {
-    backgroundColor: 'blue'
+    backgroundColor: '#3344DD',
+    borderColor: 'black',
+    borderBottomWidth: 1
   },
   scene: {
     paddingTop: 63
