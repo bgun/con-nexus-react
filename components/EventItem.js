@@ -18,11 +18,6 @@ import globalStyles from '../globalStyles';
 
 export default class EventItem extends Component {
 
-  constructor(props) {
-    super();
-    console.log("NEW EVENT ITEM", props);
-  }
-
   render() {
     let event = _.find(global.con_data.events, e => (e.event_id === this.props.event_id));
     console.log("event", event);

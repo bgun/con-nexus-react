@@ -48,7 +48,6 @@ class ConNexusReact extends Component {
   }
 
   componentWillMount() {
-
     let con_data = {};
     let msg = "Could not get convention data";
 
@@ -82,10 +81,7 @@ class ConNexusReact extends Component {
       this.setState({
         loading: false
       });
-    })
-    .catch(err => {
-      throw err;
-    });
+    }).done();
   }
 
   openMenu() {

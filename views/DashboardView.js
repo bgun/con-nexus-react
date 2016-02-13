@@ -5,6 +5,7 @@ import React, {
   Component,
   Dimensions,
   Image,
+  ListView,
   ScrollView,
   StyleSheet,
   Text,
@@ -29,15 +30,18 @@ export default class DashboardView extends Component {
     super();
     this.state = {
       con_data: global.con_data || {},
-      todos: []
+      dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
     }
   }
 
   componentWillMount() {
+    let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     dataStore.fetchTodos()
       .then(todos => {
+        let todosArray = Array.from(todos);
+        console.log(todosArray);
         this.setState({
-          todos: todos ? todos : []
+          dataSource: ds.cloneWithRows(todosArray)
         });
       })
       .catch(err => {
@@ -46,18 +50,15 @@ export default class DashboardView extends Component {
   }
 
   render() {
-    let todos = Array.from(this.state.todos);
-    console.log("todos", todos);
-    let views = todos.map(e => <EventItem key={e} event_id={ e } />);
-    console.log("dash", views);
-
     return (
       <View style={ styles.container }>
         <ScrollView style={{ flexDirection: 'column' }}>
           <Image style={{ flex: 1, height: 350, width: ww }} source={ require('../img/mysticon.jpg') } />
-          <View style={{ flex: 1 }}>
-            { views }
-          </View>
+          <ListView
+            style={{ flex: 1 }}
+            dataSource={ this.state.dataSource }
+            renderRow={ rowData => <EventItem key={ rowData.event_id } event_id={ rowData.event_id } /> }
+          />
         </ScrollView>
       </View>
     );
