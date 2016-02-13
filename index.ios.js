@@ -78,6 +78,7 @@ class ConNexusReact extends Component {
       console.log(msg);
 
       global.con_data = con_data;
+      console.log("CON",con_data);
       this.setState({
         loading: false
       });

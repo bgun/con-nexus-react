@@ -20,7 +20,6 @@ export default class EventItem extends Component {
 
   render() {
     let event = _.find(global.con_data.events, e => (e.event_id === this.props.event_id));
-    console.log("event", event);
     if (!event) {
       throw new Error("Event not found!");
     }

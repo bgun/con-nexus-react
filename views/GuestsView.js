@@ -20,7 +20,6 @@ export default class GuestsView extends Component {
   constructor(props) {
     super();
     let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-    console.log("PROPS", props);
     let sortedGuests = _.sortBy(global.con_data.guests, 'name');
     this.state = {
       dataSource: ds.cloneWithRows(sortedGuests)

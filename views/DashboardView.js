@@ -34,19 +34,19 @@ export default class DashboardView extends Component {
     }
   }
 
-  componentWillMount() {
-    let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+  componentDidMount() {
     dataStore.fetchTodos()
       .then(todos => {
         let todosArray = Array.from(todos);
-        console.log(todosArray);
-        this.setState({
-          dataSource: ds.cloneWithRows(todosArray)
+        console.log("asyncstorage", todosArray);
+        todosArray = todosArray.map(todo => {
+          return _.find(global.con_data.events, e => e.event_id === todo);
         });
-      })
-      .catch(err => {
-        throw err;
-      });
+        console.log("array",todosArray);
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(todosArray)
+        });
+      }).done();
   }
 
   render() {

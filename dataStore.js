@@ -24,9 +24,7 @@ export default {
           console.log("fetched data from network", typeof data);
           resolve(data);
         })
-        .catch(err => {
-          resolve(null)
-        });
+        .done();
     });
   },
 
@@ -37,9 +35,7 @@ export default {
           console.log("what was in storage?", typeof resp);
           resolve(JSON.parse(resp));
         })
-        .catch(err => {
-          resolve(null);
-        });
+        .done();
     });
   },
 
@@ -47,14 +43,11 @@ export default {
     return new Promise((resolve, reject) => {
       AsyncStorage.getItem('todo')
         .then(resp => {
-          console.log("todos", resp);
           let todos = new Set(JSON.parse(resp));
           global.todos = todos;
           resolve(todos);
         })
-        .catch(err => {
-          resolve(null);
-        });
+        .done();
     });
   },
 
@@ -66,9 +59,7 @@ export default {
           console.log("save todos", resp);
           resolve(resp);
         })
-        .catch(err => {
-          resolve(null);
-        });
+        .done();
     });
   }
 
