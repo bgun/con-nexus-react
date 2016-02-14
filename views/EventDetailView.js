@@ -42,6 +42,7 @@ export default class EventDetailView extends Component {
         </View>
         <TodoButton event={ event } />
         <FeedbackButton subject={ event.title } />
+        <View style={{ height: 30 }} />
       </ScrollView>
     );
   }
@@ -51,10 +52,10 @@ export default class EventDetailView extends Component {
 const styles = StyleSheet.create({
   view: {
     backgroundColor: '#FAFAFA',
-    padding: 20,
+    paddingHorizontal: 20,
     paddingBottom: 100
   },
   list: {
-    marginBottom: 50
+    marginBottom: 30
   }
 });

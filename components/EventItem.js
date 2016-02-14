@@ -40,7 +40,7 @@ export default class EventItem extends Component {
           </View>
         </View>
         { isTodo ? (
-          <Icon name="star" color="blue" size={20} style={{ paddingTop: 8, paddingRight: 8 }} />
+          <Icon name="star" color={ globalStyles.COLORS.highlight } size={20} style={{ paddingTop: 8, paddingRight: 8 }} />
         ) : null }
       </TouchableOpacity>
     );

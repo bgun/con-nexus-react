@@ -42,6 +42,7 @@ export default class GuestDetailView extends Component {
             <EventItem key={ e } event_id={ e } />
           )) : null}
         </View>
+        <View style={{ height: 30 }} />
       </ScrollView>
     );
   }

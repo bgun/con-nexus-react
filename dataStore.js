@@ -21,7 +21,6 @@ export default {
       fetch('http://con-nexus.bgun.me/api/con/mysticon2016', fetchOptions)
         .then(resp => resp.json())
         .then(data => {
-          console.log("fetched data from network", typeof data);
           resolve(data);
         })
         .done();
@@ -32,7 +31,6 @@ export default {
     return new Promise((resolve, reject) => {
       AsyncStorage.getItem('con_data')
         .then(resp => {
-          console.log("what was in storage?", typeof resp);
           resolve(JSON.parse(resp));
         })
         .done();

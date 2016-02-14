@@ -17,6 +17,10 @@ let window = Dimensions.get('window');
 
 class TabIcon extends React.Component {
   handlePress() {
+    if (this.props.onPress) {
+      this.props.onPress();
+      return;
+    }
     this.setState({
       selected: true
     });
@@ -25,8 +29,8 @@ class TabIcon extends React.Component {
   render() {
     return (
       <TouchableOpacity style={ styles.tab } onPress={ this.handlePress.bind(this) }>
-        <Icon name={ this.props.icon } color="white" size={20} />
-        <Text style={{ color: 'white' }}>{ this.props.text }</Text>
+        <Icon name={ this.props.icon } color="#558" size={ this.props.iconSize || 20 } />
+        <Text style={{ color: '#335' }}>{ this.props.text }</Text>
       </TouchableOpacity>
     );
   }
@@ -39,7 +43,7 @@ export default class Tabbers extends React.Component {
         <TabIcon icon="home"     action="dashboard" text="Home" />
         <TabIcon icon="calendar" action="schedule"  text="Schedule" />
         <TabIcon icon="users"    action="guests"    text="Guests" />
-        <TabIcon icon="map"      action="hotelMap"  text="Map" />
+        <TabIcon icon="dots-three-horizontal"  onPress={ this.props.onPressMenuButton } text="More" />
       </View>
     );
   }
@@ -47,16 +51,16 @@ export default class Tabbers extends React.Component {
 
 let styles = StyleSheet.create({
   container: {
-    backgroundColor: '#73A',
-    borderColor: '#DDDDDD',
+    backgroundColor: '#EEE',
+    borderColor: '#CCC',
     borderTopWidth: 1,
     flexDirection: 'row',
-    height: 50
+    height: 54
   },
   tab: {
     alignItems: 'center',
     flex: 1,
     flexDirection: 'column',
-    paddingTop: 7
+    paddingTop: 8
   }
 });

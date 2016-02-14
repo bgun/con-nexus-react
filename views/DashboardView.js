@@ -38,11 +38,9 @@ export default class DashboardView extends Component {
     dataStore.fetchTodos()
       .then(todos => {
         let todosArray = Array.from(todos);
-        console.log("asyncstorage", todosArray);
         todosArray = todosArray.map(todo => {
           return _.find(global.con_data.events, e => e.event_id === todo);
         });
-        console.log("array",todosArray);
         this.setState({
           dataSource: this.state.dataSource.cloneWithRows(todosArray)
         });
@@ -54,7 +52,7 @@ export default class DashboardView extends Component {
       <View style={ styles.container }>
         <ScrollView style={{ flexDirection: 'column' }}>
           <Image style={{ flex: 1, height: 320, width: window.width }} source={ require('../img/mysticon.jpg') } />
-          <Text style={ styles.todoTitleText }>MY TODO LIST</Text>
+          <Text style={ styles.todoTitleText }>MY TO-DO LIST</Text>
           <ListView
             tabLabel="My Todo List"
             style={{ flex: 1, width: window.width }}
@@ -79,6 +77,6 @@ const styles = StyleSheet.create({
     color: '#666666',
     fontSize: 13,
     paddingHorizontal: 10,
-    paddingVertical: 8
+    paddingVertical: 6
   }
 });

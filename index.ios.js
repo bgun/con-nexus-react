@@ -29,6 +29,7 @@ import GuestDetailView from './views/GuestDetailView';
 import GuestsView      from './views/GuestsView';
 import HotelMapView    from './views/HotelMapView';
 import LocalMapView    from './views/LocalMapView';
+import NewsView        from './views/NewsView';
 import ScheduleView    from './views/ScheduleView';
 
 import Menu      from './components/Menu';
@@ -78,7 +79,6 @@ class ConNexusReact extends Component {
       console.log(msg);
 
       global.con_data = con_data;
-      console.log("CON",con_data);
       this.setState({
         loading: false
       });
@@ -108,7 +108,11 @@ class ConNexusReact extends Component {
         ) : (
         <SideMenu menu={ <Menu onAction={ () => this.closeMenu() } /> } menuPosition="right" isOpen={ this.state.menuOpen }>
           <View style={{ flex: 1 }}>
-            <Router sceneStyle={ styles.scene } navigationBarStyle={ styles.navbar } footer={ Tabbers } onPressMenuButton={ () => this.openMenu() }>
+            <Router
+                sceneStyle={ styles.scene }
+                navigationBarStyle={ styles.navbar }
+                footer={ Tabbers }
+                onPressMenuButton={ () => this.openMenu() }>
               <Schema name="modal"   sceneConfig={ Navigator.SceneConfigs.FloatFromBottom }/>
               <Schema name="default" sceneConfig={ Navigator.SceneConfigs.FloatFromRight  }/>
               <Schema name="tab" />
@@ -124,10 +128,12 @@ class ConNexusReact extends Component {
               <Route name="localMap"  title="Local Map" component={ LocalMapView } />
               <Route name="feedback"  title="Feedback"  component={ FeedbackView } schema="modal"/>
               <Route name="about"     title="About"     component={ AboutView    } />
+              <Route name="newsFeed"  title="News"      component={ NewsView     } />
             </Router>
           </View>
-          <TouchableOpacity style={ styles.menuButton } onPress={ () => this.openMenu() }>
-            <Icon name="menu" size={32} color="white" />
+          <TouchableOpacity style={ styles.menuButton } onPress={ () => Actions.newsFeed() }>
+            <Icon name="bell" size={22} color="white" />
+            <View style={ styles.newsDot } />
           </TouchableOpacity>
         </SideMenu>
         ) }
@@ -141,7 +147,7 @@ let styles = StyleSheet.create({
     alignItems: 'center',
     height: 50,
     justifyContent: 'center',
-    marginTop: 20,
+    marginTop: 18,
     position: 'absolute',
     right: 0,
     top: 0,
@@ -161,6 +167,15 @@ let styles = StyleSheet.create({
   },
   scene: {
     paddingTop: 63
+  },
+  newsDot: {
+    backgroundColor: 'red',
+    borderRadius: 10,
+    height: 10,
+    position: 'absolute',
+      top: 10,
+      right: 10,
+    width: 10
   }
 });
 

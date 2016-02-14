@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#4488DD',
     borderRadius: 10,
-    marginTop: 10,
     paddingHorizontal: 20,
     paddingVertical: 10
   },
@@ -60,7 +59,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#2244AA',
     borderRadius: 10,
-    marginTop: 10,
     paddingHorizontal: 20,
     paddingVertical: 10
   },
