@@ -4,7 +4,9 @@ let _borderColor = '#DDDDDD';
 
 export default {
   COLORS: {
-    highlight: '#228f59'
+    headerBg: '#4270a9',
+    highlight: '#228f59',
+    menuBg: '#2b3e62'
   },
   floatingList: {
     backgroundColor: '#FFFFFF',

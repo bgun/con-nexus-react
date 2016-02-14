@@ -15,6 +15,8 @@ import { Actions } from 'react-native-router-flux';
 
 import Icon from 'react-native-vector-icons/Entypo';
 
+import globalStyles from '../globalStyles';
+
 let window = Dimensions.get('window');
 
 
@@ -50,7 +52,7 @@ export default class Menu extends React.Component {
 
 let styles = StyleSheet.create({
   container: {
-    backgroundColor: '#112255',
+    backgroundColor: globalStyles.COLORS.menuBg,
     flex: 1,
     height: window.height,
     paddingLeft: window.width/3, // side menu defaults to 2/3 of screen width

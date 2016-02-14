@@ -37,6 +37,8 @@ import Tabbers   from './components/Tabbers'
 
 import dataStore from './dataStore';
 
+import globalStyles from './globalStyles';
+
 
 class ConNexusReact extends Component {
 
@@ -107,7 +109,7 @@ class ConNexusReact extends Component {
         </View>
         ) : (
         <SideMenu menu={ <Menu onAction={ () => this.closeMenu() } /> } menuPosition="right" isOpen={ this.state.menuOpen }>
-          <View style={{ flex: 1 }}>
+          <View style={ styles.mainView }>
             <Router
                 sceneStyle={ styles.scene }
                 navigationBarStyle={ styles.navbar }
@@ -143,6 +145,12 @@ class ConNexusReact extends Component {
 }
 
 let styles = StyleSheet.create({
+  mainView: {
+    flex: 1,
+    shadowColor: "#000000",
+    shadowOpacity: 0.5,
+    shadowRadius: 12
+  },
   menuButton: {
     alignItems: 'center',
     height: 50,
@@ -161,7 +169,7 @@ let styles = StyleSheet.create({
       right: 0
   },
   navbar: {
-    backgroundColor: '#334499',
+    backgroundColor: globalStyles.COLORS.headerBg,
     borderColor: 'black',
     borderBottomWidth: 1
   },

@@ -11,6 +11,8 @@ import React, {
   View
 } from 'react-native';
 
+import globalStyles from '../globalStyles';
+
 let window = Dimensions.get('window');
 
 
@@ -92,8 +94,8 @@ var styles = StyleSheet.create({
     flex: 1
   },
   map: {
-    borderColor: 'red',
-    borderWidth: 2,
+    borderColor: globalStyles.COLORS.highlight,
+    borderWidth: 40,
     height: 700,
     position: 'absolute',
     width: 1000
