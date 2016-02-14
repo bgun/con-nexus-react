@@ -53,8 +53,8 @@ export default class DashboardView extends Component {
     return (
       <View style={ styles.container }>
         <ScrollView style={{ flexDirection: 'column' }}>
-          <Image style={{ flex: 1, height: 350, width: window.width }} source={ require('../img/mysticon.jpg') } />
-          <Text style={{ paddingHorizontal: 10, paddingVertical: 5 }}>My Todo List</Text>
+          <Image style={{ flex: 1, height: 320, width: window.width }} source={ require('../img/mysticon.jpg') } />
+          <Text style={ styles.todoTitleText }>MY TODO LIST</Text>
           <ListView
             tabLabel="My Todo List"
             style={{ flex: 1, width: window.width }}
@@ -74,5 +74,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#F8F8F8',
     flex: 1,
     justifyContent: 'center'
+  },
+  todoTitleText: {
+    color: '#666666',
+    fontSize: 13,
+    paddingHorizontal: 10,
+    paddingVertical: 8
   }
 });

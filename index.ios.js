@@ -155,7 +155,7 @@ let styles = StyleSheet.create({
       right: 0
   },
   navbar: {
-    backgroundColor: '#3344DD',
+    backgroundColor: '#334499',
     borderColor: 'black',
     borderBottomWidth: 1
   },

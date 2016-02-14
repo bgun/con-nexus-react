@@ -50,7 +50,7 @@ export default class Menu extends React.Component {
 
 let styles = StyleSheet.create({
   container: {
-    backgroundColor: 'darkblue',
+    backgroundColor: '#112255',
     flex: 1,
     height: window.height,
     paddingLeft: window.width/3, // side menu defaults to 2/3 of screen width
