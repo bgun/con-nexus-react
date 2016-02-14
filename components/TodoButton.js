@@ -17,25 +17,48 @@ import globalStyles from '../globalStyles';
 
 export default class FeedbackButton extends Component {
 
-  handlePress() {
+  handleAddTodo() {
     global.todos.add(this.props.event.event_id);
-    dataStore.saveTodos(global.todos);
+    dataStore.saveTodos();
+    this.forceUpdate();
+  }
+
+  handleRemoveTodo() {
+    global.todos.delete(this.props.event.event_id);
+    dataStore.saveTodos();
+    this.forceUpdate();
   }
 
   render() {
     return (
-      <TouchableOpacity style={ styles.button } onPress={ () => this.handlePress() }>
-        <Text style={ styles.buttonText }>Add to my todo list</Text>
-      </TouchableOpacity>
+      <View>
+        { global.todos.has(this.props.event.event_id) ? (
+          <TouchableOpacity style={ styles.buttonRemove } onPress={ () => this.handleRemoveTodo() }>
+            <Text style={ styles.buttonText }>Remove from todo list</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity style={ styles.buttonAdd } onPress={ () => this.handleAddTodo() }>
+            <Text style={ styles.buttonText }>Add to my todo list</Text>
+          </TouchableOpacity>
+        ) }
+      </View>
     );
   }
 
 }
 
 const styles = StyleSheet.create({
-  button: {
+  buttonAdd: {
     alignItems: 'center',
     backgroundColor: '#4488DD',
+    borderRadius: 10,
+    marginTop: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10
+  },
+  buttonRemove: {
+    alignItems: 'center',
+    backgroundColor: '#2244AA',
     borderRadius: 10,
     marginTop: 10,
     paddingHorizontal: 20,

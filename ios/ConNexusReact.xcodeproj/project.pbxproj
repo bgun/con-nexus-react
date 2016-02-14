@@ -700,6 +700,7 @@
 				INFOPLIST_FILE = ConNexusReact/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.con-nexus.app.mysticon";
 				PRODUCT_NAME = ConNexusReact;
 			};
 			name = Debug;
@@ -717,6 +718,7 @@
 				INFOPLIST_FILE = ConNexusReact/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.con-nexus.app.mysticon";
 				PRODUCT_NAME = ConNexusReact;
 			};
 			name = Release;

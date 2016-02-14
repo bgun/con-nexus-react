@@ -51,16 +51,13 @@ export default {
     });
   },
 
-  saveTodos: (todos) => {
+  saveTodos: () => {
     let todo_array = Array.from(global.todos);
-    return new Promise((resolve, reject) => {
-      AsyncStorage.setItem('todo', JSON.stringify(todo_array))
-        .then(resp => {
-          console.log("save todos", resp);
-          resolve(resp);
-        })
-        .done();
-    });
+    AsyncStorage.setItem('todo', JSON.stringify(todo_array))
+      .then(resp => {
+        console.log("save todos", resp);
+      })
+      .done();
   }
 
 }
