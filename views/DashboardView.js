@@ -32,19 +32,27 @@ export default class DashboardView extends Component {
       con_data: global.con_data || {},
       dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
     }
+    this.getTodos();
   }
 
-  componentDidMount() {
-    dataStore.fetchTodos()
-      .then(todos => {
-        let todosArray = Array.from(todos);
-        todosArray = todosArray.map(todo => {
-          return _.find(global.con_data.events, e => e.event_id === todo);
-        });
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(todosArray)
-        });
-      }).done();
+  componentWillReceiveProps() {
+    this.getTodos();
+  }
+
+  getTodos() {
+    console.log("GET TODOS");
+    if (global.con_data) {
+      dataStore.fetchTodos()
+        .then(todos => {
+          let todosArray = Array.from(todos);
+          todosArray = _(todosArray).map(todo => {
+            return _.find(global.con_data.events, e => e.event_id === todo);
+          }).sortBy("datetime").value();
+          this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(todosArray)
+          });
+        }).done();
+    }
   }
 
   render() {
@@ -69,13 +77,14 @@ export default class DashboardView extends Component {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: '#F8F8F8',
+    backgroundColor: '#DDE',
     flex: 1,
     justifyContent: 'center'
   },
   todoTitleText: {
-    color: '#666666',
-    fontSize: 13,
+    color: '#778',
+    fontSize: 12,
+    fontWeight: 'bold',
     paddingHorizontal: 10,
     paddingVertical: 6
   }

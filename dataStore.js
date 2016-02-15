@@ -37,6 +37,17 @@ export default {
     });
   },
 
+  saveToStorage: (data) => {
+    return new Promise((resolve, reject) => {
+      let str = JSON.stringify(data);
+      AsyncStorage.setItem('con_data', str)
+        .then(resp => {
+          resolve(true);
+        })
+        .done();
+    });
+  },
+
   fetchTodos: () => {
     return new Promise((resolve, reject) => {
       AsyncStorage.getItem('todo')

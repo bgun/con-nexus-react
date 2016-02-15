@@ -34,6 +34,7 @@ import ScheduleView    from './views/ScheduleView';
 
 import Menu      from './components/Menu';
 import Tabbers   from './components/Tabbers'
+import Toast     from './components/Toast';
 
 import dataStore from './dataStore';
 
@@ -63,8 +64,14 @@ class ConNexusReact extends Component {
 
       if (storageData && networkData) {
         // we have both, take whichever is newer
-        con_data = (storageData.updated >= networkData.updated) ? storageData : networkData;
-        msg = (storageData.updated === networkData.updated) ? "Found same data" : "Found updated data";
+        if (storageData.updated >= networkData.updated) {
+          msg = "Found same data";
+          con_data = storageData;
+        } else {
+          msg = "Found updated data";
+          con_data = networkData;
+          dataStore.saveToStorage(con_data);
+        }
       } else if (storageData) {
         // network failure, use stored data
         con_data = storageData;
@@ -73,12 +80,15 @@ class ConNexusReact extends Component {
         // first time we are running the app, download from network
         con_data = networkData;
         msg = "First time using app. Downloaded data";
+        dataStore.saveToStorage(con_data);
       } else {
         // first time we are running the app, and we have no connection. Bummer.
       }
 
       //Alert.alert(msg);
       console.log(msg);
+
+      global.makeToast(msg);
 
       global.con_data = con_data;
       this.setState({
@@ -103,11 +113,6 @@ class ConNexusReact extends Component {
     let isLoadingStyle = this.state.loading ? { bottom: 0 } : {};
     return (
       <View style={{ flex: 1 }}>
-        { this.state.loading ? (
-        <View style={[ styles.loading, isLoadingStyle ]}>
-          <Text>Loading...</Text>
-        </View>
-        ) : (
         <SideMenu menu={ <Menu onAction={ () => this.closeMenu() } /> } menuPosition="right" isOpen={ this.state.menuOpen }>
           <View style={ styles.mainView }>
             <Router
@@ -117,7 +122,7 @@ class ConNexusReact extends Component {
                 onPressMenuButton={ () => this.openMenu() }>
               <Schema name="modal"   sceneConfig={ Navigator.SceneConfigs.FloatFromBottom }/>
               <Schema name="default" sceneConfig={ Navigator.SceneConfigs.FloatFromRight  }/>
-              <Schema name="tab" />
+              <Schema name="tab" type="reset" />
 
               <Route name="dashboard" schema="tab" title="Home"      component={ DashboardView } />
               <Route name="schedule"  schema="tab" title="Schedule"  component={ ScheduleView }  />
@@ -138,7 +143,12 @@ class ConNexusReact extends Component {
             <View style={ styles.newsDot } />
           </TouchableOpacity>
         </SideMenu>
-        ) }
+        { this.state.loading ? (
+          <View style={[ styles.loading, isLoadingStyle ]}>
+            <Text>Loading...</Text>
+          </View>
+        ) : null }
+        <Toast />
       </View>
     )
   }
@@ -162,7 +172,8 @@ let styles = StyleSheet.create({
     width: 50
   },
   loading: {
-    backgroundColor: 'pink',
+    backgroundColor: 'white',
+    opacity: 0.5,
     position: 'absolute',
       top: -20,
       left: 0,

@@ -48,6 +48,9 @@ export default class FeedbackView extends Component {
 FeedbackView.propTypes = {
   subject: React.PropTypes.string.isRequired
 };
+FeedbackView.defaultProps = {
+  subject: "Mysticon"
+};
 
 const styles = StyleSheet.create({
   view: {

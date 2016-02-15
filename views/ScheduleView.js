@@ -18,6 +18,8 @@ import moment from 'moment';
 
 import EventItem from '../components/EventItem';
 
+import globalStyles from '../globalStyles';
+
 let window = Dimensions.get('window');
 
 let days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
@@ -89,7 +91,9 @@ export default class ScheduleView extends Component {
   renderSectionHeader(sectionData, sectionID) {
     return (
       <View style={ styles.section }>
-        <Text style={ styles.sectionText }>{ sectionData.format('dddd') }</Text>
+        <Text style={ styles.sectionText }>
+          { sectionData.format('dddd, MMMM D').toUpperCase() }
+        </Text>
       </View>
     );
   }
@@ -103,7 +107,7 @@ export default class ScheduleView extends Component {
       <View>
         { this.state.searchResults.length ? (
           <View>
-            <View style={ styles.searchResultsHeader }><Text>Search results</Text></View>
+            <View style={[styles.section, { marginTop: 39 }]}><Text style={ styles.sectionText }>SEARCH RESULTS</Text></View>
             <ScrollView style={ styles.searchResults }>
               { this.state.searchResults.map(sr => (
                 <EventItem key={ sr.event_id } event_id={ sr.event_id } />
@@ -128,6 +132,7 @@ export default class ScheduleView extends Component {
 
 const styles = StyleSheet.create({
   filterContainer: {
+    backgroundColor: 'white',
     borderBottomColor: '#DDDDDD',
     borderBottomWidth: 1,
     height: 40,
@@ -158,15 +163,23 @@ const styles = StyleSheet.create({
     width: window.width
   },
   searchResultsHeader: {
-    backgroundColor: 'gray',
+    backgroundColor: globalStyles.COLORS.highlight,
     marginTop: 39,
-    padding: 10
+    paddingHorizontal: 10,
+    paddingVertical: 15
   },
   section: {
-    backgroundColor: 'gray',
-    padding: 10
+    backgroundColor: globalStyles.COLORS.highlight,
+    paddingHorizontal: 10,
+    paddingVertical: 15,
+    shadowColor: "#000000",
+    shadowOpacity: 0.5,
+    shadowRadius: 10
   },
   sectionText: {
-    color: 'white'
+    color: 'white',
+    fontSize: 14,
+    fontWeight: 'bold',
+    opacity: 0.85
   }
 });
